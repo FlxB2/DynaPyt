@@ -22,7 +22,7 @@ class IIDs:
             with open(file_path, 'r') as file:
                 json_object = json.load(file)
             self.next_iid = json_object['next_iid']
-            self.iid_to_location = {int(k): v for k, v in json_object['iid_to_location'].items()}
+            self.iid_to_location = {int(k): Location(**v) for k, v in json_object['iid_to_location'].items()}
             self.location_to_iid = {Location(*v): k for k, v in self.iid_to_location.items()}
         self.file_path = file_path
 
@@ -37,7 +37,7 @@ class IIDs:
     def store(self):
         all_data = {
             "next_iid": self.next_iid,
-            "iid_to_location": self.iid_to_location,
+            "iid_to_location": dict(map(lambda item: (item[0], item[1]._asdict()), self.iid_to_location.items()))
         }
         json_object = json.dumps(all_data, indent=2)
         with open(self.file_path, "w") as file:
