@@ -381,12 +381,12 @@ def _func_entry_(dyn_ast, iid, args, name: str, is_lambda=False):
 
 def _func_exit_(dyn_ast, iid, name: str):
     call_if_exists('runtime_event', dyn_ast, iid)
-    call_if_exists('function_exit', dyn_ast, iid, name, None)
+    call_if_exists('function_exit', dyn_ast, iid, iid, name, None)
     return
 
 def _return_(dyn_ast, iid, function_iid, function_name, return_val=None):
     call_if_exists('runtime_event', dyn_ast, iid)
-    result_high = call_if_exists('function_exit', dyn_ast, function_iid, function_name, return_val)
+    result_high = call_if_exists('function_exit', dyn_ast, iid, function_iid, function_name, return_val)
     result_low = call_if_exists('_return', dyn_ast, iid, return_val)
     if result_low != None:
         return result_low
