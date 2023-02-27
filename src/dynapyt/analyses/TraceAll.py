@@ -538,7 +538,7 @@ class TraceAll(BaseAnalysis):
         if (not is_lambda) and (get_node_by_location(ast, iids.iid_to_location[iid], m.FunctionDef()).name in ['__str__', '__repr__']):
             self.log(iid, 'Entered function', danger_of_recursion=True)
 
-    def function_exit(self, dyn_ast: str, iid: int, function_iid: int, name: str, result: Any) -> Any:
+    def function_exit(self, dyn_ast: str, iid: int, name: str, result: Any) -> Any:
         """Hook for exiting an instrumented function.
 
         Parameters
@@ -546,8 +546,6 @@ class TraceAll(BaseAnalysis):
         dyn_ast : str
             The path to the original code. Can be used to extract the syntax tree.
         iid : int
-            Unique ID of the syntax tree node.
-        function_iid: int
             ID unique to the current file, referring to the function
         name: str
             Name of the function called
